@@ -1,0 +1,5 @@
+name: Debug Kit
+description: Provides to administrators a debugging toolbar and enhanced debugging tools.
+category: Development
+version: 2.0
+core: 1.x
