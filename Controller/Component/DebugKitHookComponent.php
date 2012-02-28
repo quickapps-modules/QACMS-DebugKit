@@ -1,8 +1,8 @@
 <?php
 class DebugKitHookComponent extends Component {
     public function startup(&$Controller) {
-        if ($Controller->Quickapps->is('user.admin') ||
-            count(array_intersect((array)Configure::read('Modules.DebugKit.settings.roles'), $Controller->Quickapps->userRoles()))
+        if ($Controller->QuickApps->is('user.admin') ||
+            count(array_intersect((array)Configure::read('Modules.DebugKit.settings.roles'), $Controller->QuickApps->userRoles()))
         ) {
             Configure::write('debug', 2);
             $Controller->Toolbar = $Controller->Components->load('DebugKit.Toolbar', array('enabled' => true));
