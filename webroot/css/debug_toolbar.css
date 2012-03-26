@@ -21,6 +21,7 @@
 	float: right;
 	list-style: none;
 	margin: 0;
+	padding: 0;
 }
 #debug-kit-toolbar .panel-tab {
 	clear: none;
@@ -76,7 +77,9 @@
 	-webkit-border-top-left-radius: 8px 8px;
 	-webkit-border-bottom-left-radius: 8px 8px;
 	-moz-border-radius-topleft: 8px;
-	-moz-border-radius-bottomleft: 8px
+	-moz-border-radius-bottomleft: 8px;
+	border-radius-topleft: 8px;
+	border-radius-bottomleft: 8px;
 }
 #debug-kit-toolbar .panel-tab.icon img {
 	display:block;
@@ -139,26 +142,17 @@
 	left: 0px;
 	right: 0px;
 }
-#debug-kit-toolbar .panel-maximize,
-#debug-kit-toolbar .panel-minimize {
+#debug-kit-toolbar .panel-toggle {
 	float: right;
 	display: block;
-	width: 12px;
-	height: 12px;
-	line-height: 12px;
+	width: 16px;
+	height: 16px;
+	font-size: 16px;
+	line-height: 14px;
 	border-left: 1px solid #afafaf;
 	border-right: 1px solid #7c7c7c;
 	text-decoration: none;
-}
-#debug-kit-toolbar .panel-maximize {
-	float: right;
 	margin: 10px 20px 0 0;
-	z-index: 999;
-	position: relative;
-}
-#debug-kit-toolbar .panel-minimize {
-	float: right;
-	margin: 10px 10px 0 0;
 	z-index: 999;
 	position: relative;
 }

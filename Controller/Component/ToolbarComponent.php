@@ -4,6 +4,7 @@ App::uses('CakeLog', 'Log');
 App::uses('CakeLogInterface', 'Log');
 App::uses('DebugTimer', 'DebugKit.Lib');
 App::uses('DebugMemory', 'DebugKit.Lib');
+App::uses('HelperCollection', 'View');
 
 /**
  * DebugKit DebugToolbar Component
@@ -73,7 +74,8 @@ class ToolbarComponent extends Component {
  * @var array
  **/
 	public $javascript = array(
-		'behavior' => '/debug_kit/js/js_debug_toolbar'
+		'jquery' => '/debug_kit/js/jquery',
+		'libs' => '/debug_kit/js/js_debug_toolbar'
 	);
 
 /**
@@ -144,7 +146,7 @@ class ToolbarComponent extends Component {
  *
  * @return bool
  **/
-	public function initialize($controller) {
+	public function initialize(Controller $controller) {
 		if (!$this->enabled) {
 			$this->_Collection->disable('Toolbar');
 		}
@@ -177,7 +179,7 @@ class ToolbarComponent extends Component {
  *
  * @return bool
  **/
-	public function startup($controller) {
+	public function startup(Controller $controller) {
 		$currentViewClass = $controller->viewClass;
 		$this->_makeViewClass($currentViewClass);
 		$controller->viewClass = 'DebugKit.Debug';
@@ -208,7 +210,7 @@ class ToolbarComponent extends Component {
  *
  * @return void
  **/
-	public function beforeRedirect($controller) {
+	public function beforeRedirect(Controller $controller, $url, $status = null, $exit = true) {
 		if (!class_exists('DebugTimer')) {
 			return null;
 		}
@@ -224,7 +226,7 @@ class ToolbarComponent extends Component {
  *
  * @return void
  **/
-	public function beforeRender($controller) {
+	public function beforeRender(Controller $controller) {
 		if (!class_exists('DebugTimer')) {
 			return null;
 		}
@@ -473,11 +475,7 @@ class HistoryPanel extends DebugPanel {
 					unset($query['url']);
 				}
 				if (!empty($query)) {
-					$title .= '?';
-					foreach ($query as $key => $value) {
-						$query[$key] = $key . '=' . urlencode($value);
-					}
-					$title .= implode('&', $query);
+					$title .= '?' . urldecode(http_build_query($query));
 				}
 				$historyStates[] = array(
 					'title' => $title,
@@ -588,10 +586,10 @@ class TimerPanel extends DebugPanel {
  * @return void
  **/
 	public function startup($controller) {
-		if (!in_array('Number', $controller->helpers)) {
+		if (!in_array('Number', array_keys(HelperCollection::normalizeObjectArray($controller->helpers)))) {
 			$controller->helpers[] = 'Number';
 		}
-		if (!in_array('SimpleGraph', $controller->helpers)) {
+		if (!in_array('SimpleGraph', array_keys(HelperCollection::normalizeObjectArray($controller->helpers)))) {
 			$controller->helpers[] = 'DebugKit.SimpleGraph';
 		}
 	}

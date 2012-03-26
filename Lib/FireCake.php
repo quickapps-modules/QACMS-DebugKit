@@ -21,7 +21,7 @@
  * @subpackage    debug_kit.views.helpers
  * @since         DebugKit 0.1
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
- **/
+ */
 App::uses('Debugger', 'Utility');
 
 if (!function_exists('firecake')) {
@@ -140,7 +140,7 @@ class FireCake {
  *
  * @return boolean
  */
-	public function detectClientExtension() {
+	public static function detectClientExtension() {
 		$ua = FireCake::getUserAgent();
 		if (!preg_match('/\sFirePHP\/([\.|\d]*)\s?/si', $ua, $match) || !version_compare($match[1], '0.0.6', '>=')) {
 			return false;
@@ -291,7 +291,7 @@ class FireCake {
 		$_this = FireCake::getInstance();
 
 		if (headers_sent($filename, $linenum)) {
-			trigger_error(sprintf(__d('debug_kit', 'Headers already sent in %s on line %s. Cannot send log data to FirePHP.'), $filename, $linenum), E_USER_WARNING);
+			trigger_error(__d('debug_kit', 'Headers already sent in %s on line %s. Cannot send log data to FirePHP.', $filename, $linenum), E_USER_WARNING);
 			return false;
 		}
 		if (!$_this->_enabled || !$_this->detectClientExtension()) {

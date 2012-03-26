@@ -42,7 +42,6 @@ class ToolbarHelper extends AppHelper {
  * @return void
  */
 	public function __construct($View, $options = array()) {
-
 		$this->_myName = strtolower(get_class($this));
 		$this->settings = array_merge($this->settings, $options);
 
@@ -54,7 +53,6 @@ class ToolbarHelper extends AppHelper {
 		if (!isset($options['output'])) {
 			$options['output'] = 'DebugKit.HtmlToolbar';
 		}
-		App::import('Helper', $options['output']);
 		$className = $options['output'];
 		if (strpos($options['output'], '.') !== false) {
 			list($plugin, $className) = explode('.', $options['output']);
@@ -66,11 +64,6 @@ class ToolbarHelper extends AppHelper {
 			$this->_cacheConfig = $options['cacheConfig'];
 			$this->_cacheEnabled = true;
 		}
-        
-        $_classHelper = "{$className}Helper";
-        if (class_exists($_classHelper)) {
-            $this->{$className} = new $_classHelper($View, $options = array());
-        }
 
 		parent::__construct($View, $options);
 
@@ -183,6 +176,7 @@ class ToolbarHelper extends AppHelper {
 			if ($isHtml) {
 				$query['query'] = h($query['query']);
 			}
+			unset($query['params']);
 			$out['queries'][] = $query;
 		}
 		if ($options['cache']) {
