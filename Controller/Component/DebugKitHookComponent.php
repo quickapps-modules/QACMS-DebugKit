@@ -2,7 +2,7 @@
 class DebugKitHookComponent extends Component {
     public function startup(Controller $Controller) {
         if ($Controller->QuickApps->is('user.admin') ||
-            count(array_intersect((array)Configure::read('Modules.DebugKit.settings.roles'), $Controller->QuickApps->userRoles()))
+            count(array_intersect((array)Configure::read('Modules.DebugKit.settings.roles'), QuickApps::userRoles()))
         ) {
             Configure::write('debug', 2);
 
